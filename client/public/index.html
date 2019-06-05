@@ -8,30 +8,30 @@
   <link rel="icon" href="<%= BASE_URL %>favicon.ico">
   <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  
-<script>
-    window.fbAsyncInit = function () {
-      FB.init({
-        appId: '2217486381803421',
-        autoLogAppEvents: true,
-        xfbml: true,
-        version: 'v2.10'
-      });
-      FB.AppEvents.logPageView();
-    };
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
 
-    (function (d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) { return; }
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-  </script>
    <title>client</title>
 </head>
+<script>
+  /* facebook auth */
+window.fbAsyncInit = function () {
+  FB.init({
+    appId: '2312167069064113',
+    autoLogAppEvents: true,
+    xfbml: true,
+    version: 'v2.10'
+  });
+  FB.AppEvents.logPageView();
+};
 
+(function (d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) { return; }
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
 <body>
   <noscript>
     <strong>We're sorry but client doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>

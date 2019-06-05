@@ -5,7 +5,6 @@ const LocalStrategy = require('passport-local').Strategy;
 const FacebookTokenStrategy = require('passport-facebook-token');
 const GooglePlusTokenStrategy = require('passport-google-plus-token');
 const config = require('./configuration');
-const secret = require('./secret');
 const User = require('./models/auth');
 const bcrypt = require('bcryptjs');
 
@@ -13,17 +12,17 @@ const bcrypt = require('bcryptjs');
 // JSON WEB TOKENS STRATEGY
 passport.use(new JwtStrategy({
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: secret.JWT_SECRET
+  secretOrKey: config.JWT_SECRET
 }, async (payload, done) => {
   try {
 
-    // Find the user specified in token
+    // Find the user by data extracted from token
     const user = await User.findById(payload.sub);
 
-    // If user doesn't exists, handle it
+    // If user doesn't exists, null means no error, false means no user
     if (!user) return done(null, false);
 
-    // Otherwise, return the user
+    // null means no error, and pass the user
     done(null, user);
   } catch (error) {
     done(error, false);
@@ -32,7 +31,7 @@ passport.use(new JwtStrategy({
 
 
 
-// Google OAuth Strategy
+// Google Strategy
 passport.use('googleToken', new GooglePlusTokenStrategy({
   clientID: config.oauth.google.clientID,
   clientSecret: config.oauth.google.clientSecret,
@@ -42,7 +41,7 @@ passport.use('googleToken', new GooglePlusTokenStrategy({
     console.log('profile', profile);
     console.log('accessToken', accessToken);
     console.log('refreshToken', refreshToken);
-
+    // Find the user by data extracted from token
     const existingUser = await User.findOne({ "google.id": profile.id });
     if (existingUser) {
       return done(null, existingUser);
@@ -63,13 +62,7 @@ passport.use('googleToken', new GooglePlusTokenStrategy({
   }
 }));
 
-
-
-
-//Facebook Oauth Strategy
-
-
-
+//Facebook Strategy
 passport.use('facebookToken', new FacebookTokenStrategy({
   clientID: config.oauth.facebook.clientID,
   clientSecret: config.oauth.facebook.clientSecret
@@ -99,9 +92,7 @@ passport.use('facebookToken', new FacebookTokenStrategy({
   }
 }));
 
-
-
-// LOCAL STRATEGY
+// Local Strategy
 passport.use(new LocalStrategy({
   usernameField: 'email'
 }, async (email, password, done) => {
@@ -109,24 +100,20 @@ passport.use(new LocalStrategy({
     // Find the user given the email
     const user = await User.findOne({ "local.email": email });
 
-    // If not, handle it
-    if (!user) return done(null, false);  // null means no error , false means no user
+    // If user doesn't exist, null means no error , false means no user
+    if (!user) return done(null, false);
 
-
-    // Check if the password is correct
-
+    // Compare entered password with the one in the database
     const passwordInDB = user.local.password;
     const isMatch = await bcrypt.compare(password, passwordInDB);
-
-    // If not, handle it
     if (!isMatch) {
-      console.log('not match');
-      return done(null, false); // null means no error , false means no user
+      // null means no error , false means no user
+      return done(null, false);
     }
-    // console.log('match');
-    // Otherwise, return the user
-    done(null, user);  // null means no error , user means no user
+    // null means no error , user means no user
+    done(null, user);
   } catch (error) {
-    done(error, false);  //error means error , false means no user
+    //error means error , false means no user
+    done(error, false);
   }
 }));

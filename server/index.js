@@ -1,34 +1,31 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 require('./db/connection');
-//const passport = require('passport');
 
 const app = express();
 
 app.use(morgan('dev'));
 app.use(cors({
-  origin: 'http://localhost:8080'
+  origin: 'https://localhost:8081'
 }));
-//app.use(passport.initialize());
 app.use(express.json());
 
-
-
-app.use('/auth',  require('./routes/auth'));
 // initialize passport
+app.use('/auth',  require('./routes/auth'));
 
-
-
-
-// Catch 404 errors
+// catch 404 errors
 app.use((req, res, next) => {
     const err = new Error('Not found');
     err.status = 404;
     next(err);
 })
 
-// Error handler function
+// error handler function
 app.use((err, req, res, next) => {
 
     const error = app.get('env') === 'development' ? err : {};
