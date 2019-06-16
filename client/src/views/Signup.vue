@@ -7,47 +7,53 @@
     </div>
     <div v-if="errorMessage" class="alert alert-danger" role="alert">{{ errorMessage }}</div>
     <div class="container">
-      <form v-if="!signingUp" @submit.prevent="signup">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            v-model="user.email"
-            type="text"
-            class="form-control"
-            id="email"
-            aria-describedby="emailHelp"
-            required
-          >
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="password">Password</label>
-            <input
-              v-model="user.password"
-              type="password"
-              class="form-control"
-              id="password"
-              aria-describedby="passwordHelp"
-              required
-            >
+      <div class="row">
+        <div class="col-lg=3 col-md-2 col-sm-1 col-xs-12"></div>
+        <div class="col-lg=6 col-md-8 col-sm-10 col-xs-12">
+          <form v-if="!signingUp" @submit.prevent="signup">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                v-model="user.email"
+                type="text"
+                class="form-control"
+                id="email"
+                aria-describedby="emailHelp"
+                required
+              >
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="password">Password</label>
+                <input
+                  v-model="user.password"
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  aria-describedby="passwordHelp"
+                  required
+                >
+              </div>
+              <div class="form-group col-md-6">
+                <label for="confirmPassword">Confirm Password</label>
+                <input
+                  v-model="user.confirmPassword"
+                  type="password"
+                  class="form-control"
+                  id="confirmPassword"
+                  aria-describedby="confirmPasswordHelp"
+                  required
+                >
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Signup</button>
+          </form>
+          <div class="mt-3">
+            <router-link to="/signin">I am already a member</router-link>
           </div>
-          <div class="form-group col-md-6">
-            <label for="confirmPassword">Confirm Password</label>
-            <input
-              v-model="user.confirmPassword"
-              type="password"
-              class="form-control"
-              id="confirmPassword"
-              aria-describedby="confirmPasswordHelp"
-              required
-            >
-          </div>
         </div>
-        <button type="submit" class="btn btn-primary">Signup</button>
-      </form>
-      <div class="mt-3">
-        <router-link to="/signin">I am already a member</router-link>
       </div>
+       <div class="col-lg=3 col-md-2 col-sm-1 col-xs-12"></div>
     </div>
   </section>
 </template>

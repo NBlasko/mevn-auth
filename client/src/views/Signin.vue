@@ -12,42 +12,48 @@
     >{{errorMessage| filtermessage }}</div>
 
     <div class="container" v-if="!loggingIn">
-      <div class="btn-group d-flex align-items-start justify-content-around">
-        <!--facebook button -->
-        <facebook-component></facebook-component>
+      <div class="row">
+        <div class="col-lg=3 col-md-2 col-sm-1 col-xs-12"></div>
+        <div class="col-lg=6 col-md-8 col-sm-10 col-xs-12">
+          <div class="btn-group d-flex align-items-start justify-content-around">
+            <!--facebook button -->
+            <facebook-component></facebook-component>
 
-        <!--google+ button -->
-        <google-component></google-component>
-      </div>
-      <form class="mt-2" @submit.prevent="signin()">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            v-model="user.email"
-            type="text"
-            class="form-control"
-            id="email"
-            aria-describedby="emailHelp"
-            required
-          >
+            <!--google+ button -->
+            <google-component></google-component>
+          </div>
+          <form class="mt-2" @submit.prevent="signin()">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                v-model="user.email"
+                type="text"
+                class="form-control"
+                id="email"
+                aria-describedby="emailHelp"
+                required
+              >
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input
+                v-model="user.password"
+                type="password"
+                class="form-control"
+                id="password"
+                aria-describedby="passwordHelp"
+                required
+              >
+            </div>
+            <button type="submit" class="btn btn-primary">Signin</button>
+          </form>
+          <br>
+          <div>
+            Don’t have an account?
+            <router-link to="/signup">Sign up</router-link>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            v-model="user.password"
-            type="password"
-            class="form-control"
-            id="password"
-            aria-describedby="passwordHelp"
-            required
-          >
-        </div>
-        <button type="submit" class="btn btn-primary">Signin</button>
-      </form>
-      <br>
-      <div>
-        Don’t have an account?
-        <router-link to="/signup">Sign up</router-link>
+        <div class="col-lg=3 col-md-2 col-sm-1 col-xs-12"></div>
       </div>
     </div>
   </section>
