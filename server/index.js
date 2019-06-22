@@ -10,13 +10,13 @@ require('./db/connection');
 const app = express();
 
 app.use(morgan('dev'));
-app.use(cors({
-  origin: 'https://localhost:8081'
-}));
+app.use(cors(
+  //  { origin: process.env.BACK_ORIGIN }
+));
 app.use(express.json());
 
 // initialize passport
-app.use('/auth',  require('./routes/auth'));
+app.use('/auth', require('./routes/auth'));
 
 // catch 404 errors
 app.use((req, res, next) => {
@@ -43,5 +43,5 @@ app.use((err, req, res, next) => {
 
 
 //start the server
-const port = app.get('port') || 3000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => { console.log(`listening on ${port}...`) });

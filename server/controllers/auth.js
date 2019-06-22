@@ -63,7 +63,7 @@ module.exports = {
   },
 
   secret: async (req, res, next) => {
-console.log(req.user[req.user.method].email)
+    console.log(req.user[req.user.method].email)
     res.json({ secret: req.user[req.user.method].email });
   }
 }
