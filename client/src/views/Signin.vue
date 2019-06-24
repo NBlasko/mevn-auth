@@ -65,7 +65,8 @@ import Vue from "vue";
 // @ is an alias to /src
 import FacebookComponent from "@/components/Facebook.vue";
 import GoogleComponent from "@/components/Google.vue";
-const SIGNIN_URL = "http://localhost:3000/auth/signin";
+const { API_URL } = require("../constants.js");
+const SIGNIN_URL = API_URL + "/signin";
 
 const schema = Joi.object().keys({
   email: Joi.string()
@@ -86,7 +87,7 @@ export default {
     loggingIn: false,
     user: {
       email: "",
-      password: ""
+      password: "",
     }
   }),
   filters: {
@@ -134,17 +135,17 @@ export default {
     },
     validUser() {
       const result = Joi.validate(this.user, schema);
-      console.log(result);
+      //  console.log(result);
       if (result.error === null) {
         return true;
       }
 
       if (result.error.message.includes("email")) {
         this.errorMessage = "email is invalid.";
-      } else {
-        this.errorMessage = "Password is invalid.";
+        return false;
       }
 
+      this.errorMessage = "Password is invalid.";
       return false;
     }
   }

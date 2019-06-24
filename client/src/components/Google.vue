@@ -8,8 +8,8 @@
 
 <script>
 import Vue from "vue";
-
-const GOOGLE_URL = "http://localhost:3000/auth/google";
+const { API_URL } = require("../constants.js");
+const GOOGLE_URL = API_URL + "/google";
 
 export default {
   methods: {

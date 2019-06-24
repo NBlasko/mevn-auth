@@ -8,13 +8,13 @@
 
 <script>
 import Vue from "vue";
-
-const FACEBOOK_URL = "http://localhost:3000/auth/facebook";
+const { API_URL } = require("../constants.js");
+const FACEBOOK_URL = API_URL + "/facebook";
 
 export default {
   methods: {
     facebook() {
-      FB.login(response => {
+      const fetchFacebook = response => {
         fetch(FACEBOOK_URL, {
           method: "POST",
           headers: {
@@ -36,6 +36,16 @@ export default {
           })
           .catch(error => {
             console.log("error", error);
+          });
+      };
+
+      FB.getLoginStatus(response => {
+        //  console.log("status", response.status);
+        if (response.status === "connected") fetchFacebook(response);
+        else
+          FB.login(response => {
+            //console.log("response face:", response);
+            fetchFacebook(response);
           });
       });
     }

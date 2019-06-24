@@ -12,6 +12,17 @@
         <div class="col-lg=6 col-md-8 col-sm-10 col-xs-12">
           <form v-if="!signingUp" @submit.prevent="signup">
             <div class="form-group">
+              <label for="name">Name</label>
+              <input
+                v-model="user.name"
+                type="text"
+                class="form-control"
+                id="name"
+                aria-describedby="nameHelp"
+                required
+              >
+            </div>
+            <div class="form-group">
               <label for="email">Email</label>
               <input
                 v-model="user.email"
@@ -53,27 +64,15 @@
           </div>
         </div>
       </div>
-       <div class="col-lg=3 col-md-2 col-sm-1 col-xs-12"></div>
+      <div class="col-lg=3 col-md-2 col-sm-1 col-xs-12"></div>
     </div>
   </section>
 </template>
 
 <script>
 import Joi from "joi";
-
-const SIGNUP_URL = "http://localhost:3000/auth/signup";
-
-const schema = Joi.object().keys({
-  email: Joi.string()
-    .email()
-    .required(),
-  password: Joi.string()
-    .regex(/^[a-zA-Z0-9]{5,30}$/)
-    .required(),
-  confirmPassword: Joi.string()
-    .regex(/^[a-zA-Z0-9]{5,30}$/)
-    .required()
-});
+const { API_URL } = require("../constants.js");
+const SIGNUP_URL = API_URL + "/signup";
 
 export default {
   data: () => ({
@@ -82,7 +81,8 @@ export default {
     user: {
       email: "",
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      name: ""
     }
   }),
   watch: {
@@ -99,7 +99,8 @@ export default {
       if (this.validUser()) {
         const body = {
           email: this.user.email,
-          password: this.user.password
+          password: this.user.password,
+          name: this.user.name
         };
         this.signingUp = true;
         fetch(SIGNUP_URL, {
@@ -115,8 +116,7 @@ export default {
               return response.json();
             }
             return response.json().then(error => {
-              console.log("rr", error.error);
-              throw new Error(error.error); //tako nekako, ali trebalo bi to bolje da sredim, glupo je error.error
+              throw new Error(error.error);
             });
           })
           .then(result => {
@@ -132,6 +132,22 @@ export default {
       }
     },
     validUser() {
+      const schema = Joi.object().keys({
+        email: Joi.string()
+          .email()
+          .required(),
+        password: Joi.string()
+          .regex(/^[a-zA-Z0-9]{5,30}$/)
+          .required(),
+        confirmPassword: Joi.string()
+          .regex(/^[a-zA-Z0-9]{5,30}$/)
+          .required(),
+        name: Joi.string()
+          .min(3)
+          .max(30)
+          .required()
+      });
+
       if (this.user.password !== this.user.confirmPassword) {
         this.errorMessage = "Passwords must match.";
         return false;
@@ -140,6 +156,11 @@ export default {
       const result = Joi.validate(this.user, schema);
       if (result.error === null) {
         return true;
+      }
+
+      if (result.error.message.includes("name")) {
+        this.errorMessage = "bad length or format of a name";
+        return false;
       }
 
       if (result.error.message.includes("email")) {
