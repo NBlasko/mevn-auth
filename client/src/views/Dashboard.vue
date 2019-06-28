@@ -7,11 +7,11 @@
 </template>
 
 <script>
-let { API_URL } = require("../constants.js");
-API_URL = API_URL + "/secret";
+const { API_URL } = require("../constants.js");
+const SECRET_URL = API_URL + "/secret";
 export default {
   mounted() {
-    fetch(API_URL, {
+    fetch(SECRET_URL, {
       headers: {
         Authorization: `Bearer ${localStorage.token}`
       },
@@ -28,11 +28,11 @@ export default {
         });
       })
       .then(result => {
-        console.log(result);
+        // console.log("result", result);
         this.name = result.secret;
       })
       .catch(error => {
-        console.log(error);
+        // console.log("error", error);
         this.logout();
       });
   },

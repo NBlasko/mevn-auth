@@ -87,7 +87,7 @@ export default {
     loggingIn: false,
     user: {
       email: "",
-      password: "",
+      password: ""
     }
   }),
   filters: {

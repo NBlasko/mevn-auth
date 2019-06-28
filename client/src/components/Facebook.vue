@@ -35,7 +35,7 @@ export default {
             this.$router.push("/dashboard");
           })
           .catch(error => {
-            console.log("error", error);
+            // console.log("error", error);
           });
       };
 

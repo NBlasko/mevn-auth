@@ -8,6 +8,7 @@ const userSchema = new Schema({
     enum: ['local'  , 'google', 'facebook'],
     required: true
   },
+  name: String,
   local: {
     email: {
       type: String,

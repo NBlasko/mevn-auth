@@ -14,7 +14,7 @@ signToken = user => {
 
 module.exports = {
   signUp: async (req, res, next) => {
-    const { email, password } = req.value.body;
+    const { email, password, name } = req.value.body;
 
     // Check if there is a user with the entered email
     const foundUser = await User.findOne({ "local.email": email });
@@ -28,7 +28,8 @@ module.exports = {
       local: {
         email: email,
         password: password
-      }
+      },
+      name
     });
 
     // Generate a salt for passsword
@@ -63,7 +64,7 @@ module.exports = {
   },
 
   secret: async (req, res, next) => {
-    console.log(req.user[req.user.method].email)
-    res.json({ secret: req.user[req.user.method].email });
+    console.log("name",req.user.name)
+    res.json({ secret: req.user.name });
   }
 }

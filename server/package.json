@@ -22,13 +22,14 @@
     "font-awesome": "^4.7.0",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.5.12",
+    "mongoose": "^5.6.0",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "passport-facebook-token": "^3.3.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-google-plus-token": "^2.1.0",
     "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "request": "^2.88.0"
   }
 }
