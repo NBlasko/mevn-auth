@@ -11,7 +11,7 @@ const app = express();
 
 app.use(morgan('dev'));
 app.use(cors(
-    { origin: process.env.BACK_ORIGIN }
+ //   { origin: process.env.BACK_ORIGIN }
 ));
 app.use(express.json());
 
