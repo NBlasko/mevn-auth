@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",
-    "@vue/cli-plugin-e2e-nightwatch": "^3.8.0",
+    "@vue/cli-plugin-e2e-nightwatch": "^5.0.8",
     "@vue/cli-plugin-eslint": "^3.8.0",
     "@vue/cli-plugin-unit-mocha": "^3.8.0",
     "@vue/cli-service": "^3.8.4",
